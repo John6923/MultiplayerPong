@@ -12,11 +12,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
+@SuppressWarnings("serial")
 public class Loader extends JFrame implements Commons{
-	
-	private final double SCREEN_WIDTH = 500;
-	private final double SCREEN_HEIGHT = 500;
-	private final String TITLE = "Multiplayer Pong Loader";
 	
 	private JLabel serverLabel = new JLabel();
 	private JButton serverButton = new JButton(SERVER_BUTTON_LABEL);
