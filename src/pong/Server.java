@@ -24,7 +24,7 @@ public class Server extends JFrame implements ActionListener, Commons {
 	private PrintWriter writer;
 	private Scanner reader;
 	
-	private double	 serverX = SERVER_START_X, 
+	private double	serverX = SERVER_START_X, 
 					serverY = SERVER_START_Y, 
 					clientX = CLIENT_START_X, 
 					clientY = CLIENT_START_Y, 
@@ -33,6 +33,9 @@ public class Server extends JFrame implements ActionListener, Commons {
 					ballDir = BALL_START_Y;
 	
 	public Server(){
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(GAME_WIDTH, GAME_HEIGHT);
+		setResizable(false);
 		try {
 			server = new ServerSocket(PORT);
 			socket = server.accept();
@@ -47,6 +50,7 @@ public class Server extends JFrame implements ActionListener, Commons {
 		add(game);
 		timer = new Timer(SERVER_SPEED, this);
 		timer.start();
+		setVisible(true);
 	}
 
 	@Override
@@ -58,12 +62,75 @@ public class Server extends JFrame implements ActionListener, Commons {
 		serverY = serverMovement * PADDLE_SPEED;
 		ballX += Math.cos(Math.toRadians(ballDir));
 		ballY += Math.sin(Math.toRadians(ballDir));
-		//TODO add ball collision
+		if(ballY > GAME_HEIGHT || ballY < 0){
+			verticalBallBounce();
+		}
+		if(ballX < 0){
+			if(ballTouchingPaddle(serverY)){
+				ballBounceRight();
+			}
+			else{
+				youLose();
+				return;
+			}
+		}
+		if(ballX > GAME_WIDTH){
+			if(ballTouchingPaddle(clientY)){
+				ballBounceLeft();
+			}
+			else{
+				youWin();
+				return;
+			}
+		}
+		writer.println(false);
 		writer.println(clientX);
 		writer.println(clientY);
 		writer.println(serverX);
 		writer.println(serverY);
 		writer.println(ballX);
 		writer.println(ballY);
+		
+		timer.start();
+	}
+	
+	private void verticalBallBounce(){
+		ballDir *= -1;
+	}
+	
+	private boolean ballTouchingPaddle(double y){
+		if(ballY > y || ballY < y + PADDLE_HEIGHT) return true;
+		return false;
+	}
+	
+	private void ballBounceRight(){
+		ballDir = (((ballDir - 90) * -1) + 90);
+	}
+	
+	private void youLose(){
+		cleanup();
+		new YouLose();
+	}
+	
+	private void ballBounceLeft(){
+		ballDir = (((ballDir - 90) * -1) + 90);
+	}
+	
+	private void youWin(){
+		cleanup();
+		new YouWin();
+	}
+	
+	private void cleanup(){
+		try{
+			output.close();
+			input.close();
+			socket.close();
+			server.close();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+		setVisible(false);
 	}
 }

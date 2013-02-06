@@ -31,4 +31,11 @@ public interface Commons {
 	public final double UP = -1;
 	public final double DOWN = 1;
 	public final double STILL = 0;
+	public final int RESULT_WIDTH = 500;
+	public final int RESULT_HEIGHT = 500;
+	public final String YOU_WIN_TEXT = "You have won the game!";
+	public final String YOU_WIN_TITLE = "You Win!";
+	public final String YOU_LOSE_TEXT = "Unfortunatly, you have lost the game :(";
+	public final String YOU_LOSE_TITLE = "You Lose.";
+	
 }

@@ -23,6 +23,9 @@ public class Client extends JFrame implements ActionListener, Commons {
 	private Scanner reader;
 	
 	public Client(String hostname){
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(GAME_WIDTH, GAME_HEIGHT);
+		setResizable(false);
 		try {
 			socket = new Socket(hostname, PORT);
 			input = socket.getInputStream();
@@ -36,6 +39,7 @@ public class Client extends JFrame implements ActionListener, Commons {
 		add(game);
 		timer = new Timer(CLIENT_SPEED, this);
 		timer.start();
+		setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
