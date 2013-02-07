@@ -33,7 +33,7 @@ public class Loader extends JFrame implements Commons{
 			e.printStackTrace();
 		}
 		serverButton.addActionListener(new ServerHandler());
-		serverButton.addActionListener(new ClientHandler());
+		clientButton.addActionListener(new ClientHandler());
 		c.add(serverLabel);
 		c.add(serverButton);
 		c.add(clientLabel);
