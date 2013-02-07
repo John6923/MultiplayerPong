@@ -70,6 +70,8 @@ public class Server extends JFrame implements ActionListener, Commons {
 				ballBounceRight();
 			}
 			else{
+				writer.println(true);
+				writer.println(true);
 				youLose();
 				return;
 			}
@@ -79,6 +81,8 @@ public class Server extends JFrame implements ActionListener, Commons {
 				ballBounceLeft();
 			}
 			else{
+				writer.println(true);
+				writer.println(false);
 				youWin();
 				return;
 			}
@@ -132,5 +136,6 @@ public class Server extends JFrame implements ActionListener, Commons {
 			e.printStackTrace();
 		}
 		setVisible(false);
+		System.exit(1);
 	}
 }

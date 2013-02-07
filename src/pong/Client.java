@@ -44,8 +44,39 @@ public class Client extends JFrame implements ActionListener, Commons {
 	
 	public void actionPerformed(ActionEvent e) {
 		writer.println(game.getNetMove());
-		game.update(new GameInfo(reader.nextDouble(), reader.nextDouble(), reader.nextDouble(), reader.nextDouble(), reader.nextDouble(), reader.nextDouble()));
+		if(!reader.nextBoolean()){
+			game.update(new GameInfo(reader.nextDouble(), reader.nextDouble(), reader.nextDouble(), reader.nextDouble(), reader.nextDouble(), reader.nextDouble()));
+		}
+		else {
+			if(reader.nextBoolean()){
+				youLose();
+			}
+			else {
+				youWin();
+			}
+		}
 	}
 	
-
+	private void youLose(){
+		cleanup();
+		new YouLose();
+	}
+	
+	private void youWin(){
+		cleanup();
+		new YouWin();
+	}
+	
+	private void cleanup(){
+		try{
+			output.close();
+			input.close();
+			socket.close();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
+		setVisible(false);
+		System.exit(1);
+	}
 }

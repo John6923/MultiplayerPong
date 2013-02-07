@@ -46,6 +46,7 @@ public class Loader extends JFrame implements Commons{
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			new Server();
+			setVisible(false);
 		}
 	}
 	
@@ -53,6 +54,7 @@ public class Loader extends JFrame implements Commons{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			new Client(clientLabel.getText());
+			setVisible(false);
 		}
 	}
 	
